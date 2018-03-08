@@ -2,64 +2,112 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Gif Tastic</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Gif Tastic</title>
 </head>
 
 <body>
-        <div id="animal-view"></div>
+  <div id="animal-view"></div>
+  <br>
 
-        <form id="animal-form">
-          <label for="animal-input">Add an Animal</label>
-          <input type="text" id="animal-input"><br>
-    
-          <!-- Button triggers new movie to be added -->
-          <input id="add-animal" type="submit" value="Add an Animal">
-        </form>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <form id="animal-form">
+    <label for="animal-input">Add an Animal</label>
+    <input type="text" id="animal-input">
+    <br>
+    <br>
+    <!-- Button triggers new animal to be added -->
+    <input id="add-animal" type="submit" value="Add an Animal">
+  </form>
+  <div id="gifs-appear-here"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<script type="text/javascript"> 
+  <script type="text/javascript"> 
 
-var animal = ["cat", "dog", "bird", "pig", "skunk", "duck", "cow", "frog", "fish", "bear", "moose", "turtle"];
+    var animal = ["cat", "dog", "bird", "pig", "skunk", "duck", "cow", "frog", "fish", "bear", "moose", "turtle"];
 
-function renderButtons() {
+    function renderButtons() {
 
-    $("#animal-view").empty();
+      $("#animal-view").empty();
 
-    for (var i = 0; i < animal.length; i++) {
-    console.log(animal[i]);
-    var a = $("<button>");
-    a.addClass("animal");
-    a.attr("data-name", animal[i]);
-          // Providing the button's text with a value of the movie at index i
-          a.text(animal[i]);
-            
-          // chain jQuery Methods
-         // var a = $("<button>").addClass("movie").attr("data-name", movies[i]).text(movies[i]);
-          // Adding the button to the HTML
-          $("#animal-view").append(a);
-        }
+      for (var i = 0; i < animal.length; i++) {
+        console.log(animal[i]);
+        var a = $("<button>");
+        a.addClass("animal");
+        a.attr("data-name", animal[i]);
+        // Providing the button's text with a value of the movie at index i
+        a.text(animal[i]);
+
+        // chain jQuery Methods
+        // var a = $("<button>").addClass("movie").attr("data-name", movies[i]).text(movies[i]);
+        // Adding the button to the HTML
+        $("#animal-view").append(a);
       }
-// This function handles events where one button is clicked
-$("#add-animal").on("click", function(event) {
-        // event.preventDefault() prevents the form from trying to submit itself.
-        // We're using a form so that the user can hit enter instead of clicking the button if they want
-        event.preventDefault();
+    }
+    // This function handles events where one button is clicked
+    $("#add-animal").on("click", function (event) {
+      // event.preventDefault() prevents the form from trying to submit itself.
+      // We're using a form so that the user can hit enter instead of clicking the button if they want
+      event.preventDefault();
 
-        // This line will grab the text from the input box
-        var movie = $("#animal-input").val().trim();
-        // The movie from the textbox is then added to our array
-        animal.push(animal);
+      // This line will grab the text from the input box
+      var animalInput = $("#animal-input").val().trim();
+      // The animal from the textbox is then added to our array
+      animal.push(animal);
 
-        // calling renderButtons which handles the processing of our movie array
-        renderButtons();
-      });
-
-      // Calling the renderButtons function at least once to display the initial list of movies
+      // calling renderButtons which handles the processing of our animal array
       renderButtons();
-    </script>
+    });
+
+    // Calling the renderButtons function at least once to display the initial list of movies
+    renderButtons();
+
+    $("button").on("click", function () {
+
+      var animalName = $(this).attr("data-name");
+
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        animalName + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+
+      .then(function(response) {
+          console.log(queryURL);
+
+          console.log(response);
+          // storing the data from the AJAX request in the results variable
+          var results = response.data;
+
+          // Looping through each result item
+          for (var i = 0; i < results.length; i++) {
+
+            // Creating and storing a div tag
+            var animalDiv = $("<div>");
+
+            // Creating a paragraph tag with the result item's rating
+            var p = $("<p>").text("Rating: " + results[i].rating);
+
+            // Creating and storing an image tag
+            var animalImage = $("<img>");
+            // Setting the src attribute of the image to a property pulled off the result item
+            animalImage.attr("src", results[i].images.fixed_height.url);
+
+            // Appending the paragraph and image tag to the animalDiv
+            animalDiv.append(p);
+            animalDiv.append(animalImage);
+            animalDiv.append(p, animalImage); //this works the same as the two above lines.
+
+            // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
+            $("#gifs-appear-here").prepend(animalDiv);
+          }
+        });
+    });
+  </script>
 
 </body>
+
 </html>
