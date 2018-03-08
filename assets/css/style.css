@@ -1,0 +1,27 @@
+body {
+    background-color: blanchedalmond;
+}
+
+.jumbotron-fluid {
+    background-color: rgb(171, 171, 177);
+    text-align: center;
+    border-radius: 4px;
+}
+
+.card-body {
+    background-color: rgb(171, 171, 177);
+    border-radius: 4px;
+    position: absolute;
+    left: 1000px;
+    padding: 7px;
+    height: 190px;
+    width: 378px;;
+}
+
+.animal {
+    width:124px;
+    height:auto;
+    display:inline-block;
+    
+}
+
