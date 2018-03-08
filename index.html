@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gif Tastic</title>
+</head>
+
+<body>
+        <div id="animal-view"></div>
+
+        <form id="animal-form">
+          <label for="animal-input">Add an Animal</label>
+          <input type="text" id="animal-input"><br>
+    
+          <!-- Button triggers new movie to be added -->
+          <input id="add-animal" type="submit" value="Add an Animal">
+        </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript"> 
+
+var animal = ["cat", "dog", "bird", "pig", "skunk", "duck", "cow", "frog", "fish", "bear", "moose", "turtle"];
+
+function renderButtons() {
+
+    $("#animal-view").empty();
+
+    for (var i = 0; i < animal.length; i++) {
+    console.log(animal[i]);
+    var a = $("<button>");
+    a.addClass("animal");
+    a.attr("data-name", animal[i]);
+          // Providing the button's text with a value of the movie at index i
+          a.text(animal[i]);
+            
+          // chain jQuery Methods
+         // var a = $("<button>").addClass("movie").attr("data-name", movies[i]).text(movies[i]);
+          // Adding the button to the HTML
+          $("#animal-view").append(a);
+        }
+      }
+// This function handles events where one button is clicked
+$("#add-animal").on("click", function(event) {
+        // event.preventDefault() prevents the form from trying to submit itself.
+        // We're using a form so that the user can hit enter instead of clicking the button if they want
+        event.preventDefault();
+
+        // This line will grab the text from the input box
+        var movie = $("#animal-input").val().trim();
+        // The movie from the textbox is then added to our array
+        animal.push(animal);
+
+        // calling renderButtons which handles the processing of our movie array
+        renderButtons();
+      });
+
+      // Calling the renderButtons function at least once to display the initial list of movies
+      renderButtons();
+    </script>
+
+</body>
+</html>
