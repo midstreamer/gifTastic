@@ -12,9 +12,9 @@ body {
     background-color: rgb(171, 171, 177);
     border-radius: 4px;
     position: absolute;
-    left: 1000px;
+    left: 1118px;
     padding: 7px;
-    height: 190px;
+    height: 200px;
     width: 378px;;
 }
 
@@ -25,3 +25,23 @@ body {
     
 }
 
+.card-title{
+    font-size: 24px;
+    text-align: center;
+
+}
+
+#add-animal{
+    position: absolute;
+    left: 13px;
+}
+
+#animal-input{
+    position: absolute;
+    left:145px;
+}
+
+label{
+    position: absolute;
+    left: 13px;
+}
